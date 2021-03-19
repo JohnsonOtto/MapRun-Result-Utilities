@@ -2,11 +2,17 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QFileDialog,
 from PyQt5.QtGui import QIcon, QFont
 import xml.etree.ElementTree as et
 import pandas as pd
-import sys
+import sys, os
 
 ns = {"ol": "http://www.orienteering.org/datastandard/3.0"}
 et.register_namespace("", ns["ol"])
-writer = pd.ExcelWriter("results.xlsx", engine="xlsxwriter")
+
+def resourcePath(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def secs2hrs(seconds):
     mins, secs = divmod(seconds, 60)
@@ -36,7 +42,7 @@ def gatherResults(xmlFile):
 
 def xml2excel(filelist):
     global root
-    global writer
+    writer = pd.ExcelWriter("results.xlsx", engine="xlsxwriter")
 
     singles = []
     whole = []
@@ -73,7 +79,7 @@ class window(QMainWindow):
 
         self.setGeometry(100,100,270,180)
         self.setWindowTitle(" ")
-        self.setWindowIcon(QIcon('icon.png'))
+        self.setWindowIcon(QIcon(resourcePath("icon.png")))
         self.initUI()
 
     def initUI(self):
