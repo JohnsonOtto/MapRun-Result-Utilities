@@ -75,7 +75,7 @@ def resourcePath(relative_path):
 def secs2hrs(seconds):
     mins, secs = divmod(seconds, 60)
     hrs, mins = divmod(mins, 60)
-    return '{:0d}:{:02d}:{:02}'.format(hrs, mins, secs)
+    return '{:02d}:{:02d}:{:02}'.format(hrs, mins, secs)
 
 def resultsFromXML(root):
     resultList = []
@@ -115,7 +115,7 @@ def getXMLResults(xmlfilelist):
 def data2xlsx(dataFrame, filename, severalSheets = True):
     writer = pd.ExcelWriter(filename, engine="xlsxwriter")
     dataFrame.to_excel(writer, sheet_name=language[win.standardLang]["allcourses"], index=False)
-    #print(dataFrame)
+
     if severalSheets:
         breakRows = []
         singleDFs = []
@@ -191,9 +191,9 @@ class PandasModel(QtCore.QAbstractTableModel):  #https://github.com/eyllanesc/st
         self._df.sort_values(colname, ascending= order == QtCore.Qt.AscendingOrder, inplace=True)
         self._df.reset_index(inplace=True, drop=True)
         self.layoutChanged.emit()
+    
 
 class window(QMainWindow):
-    
     def __init__(self):
         super().__init__()
 
@@ -230,49 +230,49 @@ class window(QMainWindow):
         self.germanAction = QAction("&German")
         self.germanAction.triggered.connect(lambda: self.changeLanguage("german"))
 
-        self.fileSubMenuLanguage = QMenu("&Change Language",self)
-        self.fileSubMenuLanguage.addAction(self.englishAction)
-        self.fileSubMenuLanguage.addAction(self.germanAction)
+        self.helpSubMenuLanguage = QMenu("&Change Language",self)
+        self.helpSubMenuLanguage.addAction(self.englishAction)
+        self.helpSubMenuLanguage.addAction(self.germanAction)
 
-        self.editMenuPlacementAction = QAction("&"+language[self.standardLang]["placement"],self, checkable=True)
-        self.editMenuPlacementAction.triggered.connect(self.placementSubmenuAction)
-        self.editMenuPlacementAction.setChecked(True)
-
-        self.editMenuSurnameAction = QAction("&"+language[self.standardLang]["surname"], self, checkable=True)
-        self.editMenuSurnameAction.triggered.connect(self.surnameSubmenuAction)
-        self.editMenuSurnameAction.setChecked(True)
-
-        self.editMenuLastnameAction = QAction("&"+language[self.standardLang]["lastname"],self, checkable = True)
-        self.editMenuLastnameAction.triggered.connect(self.lastnameSubmenuAction)
-        self.editMenuLastnameAction.setChecked(True)
-
-        self.editMenuTimeAction = QAction("&"+language[self.standardLang]["time"],self,checkable=True)
-        self.editMenuTimeAction.triggered.connect(self.timeSubmenuAction)
-        self.editMenuTimeAction.setChecked(True)
-
-        self.editMenuOrganisationAction = QAction("&"+language[self.standardLang]["organisation"],self,checkable=True)
-        self.editMenuOrganisationAction.triggered.connect(self.organisationSubmenuAction)
-        self.editMenuOrganisationAction.setChecked(True)
-
-        self.editMenuCourseAction = QAction("&"+language[self.standardLang]["course"],self, checkable=True)
-        self.editMenuCourseAction.triggered.connect(self.courseSubmenuAction)
-        self.editMenuCourseAction.setChecked(True)
-
-        self.editMenuSplittimeAction = QAction("&"+language[self.standardLang]["splittime"],self,checkable=True)
-        self.editMenuSplittimeAction.triggered.connect(self.splittimeSubmenuAction)
-        self.editMenuSplittimeAction.setChecked(False)
-
-        self.helpMenuAbout = QAction("&"+language[self.standardLang]["about"],self)
-        self.helpMenuAbout.triggered.connect(self.about)
-
-        self.editMenuSubSelect = QMenu("&"+language[self.standardLang]["columnSelect"],self)
-        self.editMenuSubSelect.addAction(self.editMenuPlacementAction)
-        self.editMenuSubSelect.addAction(self.editMenuSurnameAction)
-        self.editMenuSubSelect.addAction(self.editMenuLastnameAction)
-        self.editMenuSubSelect.addAction(self.editMenuTimeAction)
-        self.editMenuSubSelect.addAction(self.editMenuOrganisationAction)
-        self.editMenuSubSelect.addAction(self.editMenuCourseAction)
-        self.editMenuSubSelect.addAction(self.editMenuSplittimeAction)
+#       self.editMenuPlacementAction = QAction("&"+language[self.standardLang]["placement"],self, checkable=True)
+#       self.editMenuPlacementAction.triggered.connect(self.placementSubmenuAction)
+#       self.editMenuPlacementAction.setChecked(True)
+#
+#       self.editMenuSurnameAction = QAction("&"+language[self.standardLang]["surname"], self, checkable=True)
+#       self.editMenuSurnameAction.triggered.connect(self.surnameSubmenuAction)
+#       self.editMenuSurnameAction.setChecked(True)
+#
+#       self.editMenuLastnameAction = QAction("&"+language[self.standardLang]["lastname"],self, checkable = True)
+#       self.editMenuLastnameAction.triggered.connect(self.lastnameSubmenuAction)
+#       self.editMenuLastnameAction.setChecked(True)
+#
+#       self.editMenuTimeAction = QAction("&"+language[self.standardLang]["time"],self,checkable=True)
+#       self.editMenuTimeAction.triggered.connect(self.timeSubmenuAction)
+#       self.editMenuTimeAction.setChecked(True)
+#
+#       self.editMenuOrganisationAction = QAction("&"+language[self.standardLang]["organisation"],self,checkable=True)
+#       self.editMenuOrganisationAction.triggered.connect(self.organisationSubmenuAction)
+#       self.editMenuOrganisationAction.setChecked(True)
+#
+#       self.editMenuCourseAction = QAction("&"+language[self.standardLang]["course"],self, checkable=True)
+#       self.editMenuCourseAction.triggered.connect(self.courseSubmenuAction)
+#       self.editMenuCourseAction.setChecked(True)
+#
+#       self.editMenuSplittimeAction = QAction("&"+language[self.standardLang]["splittime"],self,checkable=True)
+#       self.editMenuSplittimeAction.triggered.connect(self.splittimeSubmenuAction)
+#       self.editMenuSplittimeAction.setChecked(False)
+#
+#       self.helpMenuAbout = QAction("&"+language[self.standardLang]["about"],self)
+#       self.helpMenuAbout.triggered.connect(self.about)
+#
+#       self.editMenuSubSelect = QMenu("&"+language[self.standardLang]["columnSelect"],self)
+#       self.editMenuSubSelect.addAction(self.editMenuPlacementAction)
+#       self.editMenuSubSelect.addAction(self.editMenuSurnameAction)
+#       self.editMenuSubSelect.addAction(self.editMenuLastnameAction)
+#       self.editMenuSubSelect.addAction(self.editMenuTimeAction)
+#       self.editMenuSubSelect.addAction(self.editMenuOrganisationAction)
+#       self.editMenuSubSelect.addAction(self.editMenuCourseAction)
+#       self.editMenuSubSelect.addAction(self.editMenuSplittimeAction)
 
         self.menu = self.menuBar()
         self.fileMenu = self.menu.addMenu("&"+language[self.standardLang]["file"])
@@ -280,48 +280,50 @@ class window(QMainWindow):
         self.fileMenu.addAction(self.fileMenuSaveAs)
         self.fileMenu.addAction(self.fileMenuExit)
         self.fileMenu.addSeparator()
-        self.fileMenu.addMenu(self.fileSubMenuLanguage)
 
-        self.editMenu = self.menu.addMenu("&"+language[self.standardLang]["edit"])
-        self.editMenu.addMenu(self.editMenuSubSelect)
+#        self.editMenu = self.menu.addMenu("&"+language[self.standardLang]["edit"])
+#        self.editMenu.addMenu(self.editMenuSubSelect)
 
         self.helpMenu = self.menu.addMenu("&"+language[self.standardLang]["help"])
-        self.helpMenu.addAction(self.helpMenuAbout)
+        self.helpMenu.addMenu(self.helpSubMenuLanguage)
+#        self.helpMenu.addAction(self.helpMenuAbout)
 
-        self.debugMenuAction = QAction("&Debug",self)
-        self.debugMenuAction.triggered.connect(self.button3Clicked)
+#        self.debugMenuAction = QAction("&Debug",self)
+#        self.debugMenuAction.triggered.connect(self.button3Clicked)
 
-        self.debugMenu = self.menu.addMenu("&Debug")
-        self.debugMenu.addAction(self.debugMenuAction)
+#        self.debugMenu = self.menu.addMenu("&Debug")
+#        self.debugMenu.addAction(self.debugMenuAction)
 
         self.table = QTableView(self)
         self.table.setGeometry(3, 28, self.geometry().width()-6, self.geometry().height()-32)    
         self.table.verticalHeader().setVisible(False)
 
-        self.vertTableHeaders = self.table.horizontalHeader()
-        self.vertTableHeaders.setContextMenuPolicy(Qt.CustomContextMenu) 
-        self.vertTableHeaders.customContextMenuRequested.connect(self.tableContextMenuRequest)
-
-        self.tableMenuTestAction = QAction("&Test",self)
-        self.tableMenuTestAction.triggered.connect(lambda: print("test"))
-
-        self.tableMenuMoveRightAction = QAction("&"+language[self.standardLang]["moveright"])
-        #self.tableMenuMoveRightAction.triggered.connect()
-
-        self.tableMenuMoveLeftAction = QAction("&"+language[self.standardLang]["moveleft"])
-
-        self.tableContextMenu = QMenu()
-        self.tableContextMenu.addAction(self.tableMenuTestAction)
-        self.tableContextMenu.addAction(self.tableMenuMoveLeftAction)
-        self.tableContextMenu.addAction(self.tableMenuMoveRightAction)
-
+#        self.vertTableHeaders = self.table.horizontalHeader()
+#        self.vertTableHeaders.setContextMenuPolicy(Qt.CustomContextMenu) 
+#        self.vertTableHeaders.customContextMenuRequested.connect(self.tableContextMenuRequest)
+#
+#        self.tableMenuTestAction = QAction("&Test",self)
+#        self.tableMenuTestAction.triggered.connect(lambda: print("test"))
+#
+#        self.tableMenuMoveRightAction = QAction("&"+language[self.standardLang]["moveright"])
+#        #self.tableMenuMoveRightAction.triggered.connect()
+#
+#        self.tableMenuMoveLeftAction = QAction("&"+language[self.standardLang]["moveleft"])
+#
+#        self.tableContextMenu = QMenu()
+#        self.tableContextMenu.addAction(self.tableMenuTestAction)
+#        self.tableContextMenu.addAction(self.tableMenuMoveLeftAction)
+#        self.tableContextMenu.addAction(self.tableMenuMoveRightAction)
+#
         self.showMaximized()
 
-    def tableContextMenuRequest(self, pos):
-        #self.tableMenu = QMenu()
-        #self.tableMenu.addAction(self.tableMenuTestAction)
-        self.tableContextMenu.exec_(self.table.viewport().mapToGlobal(pos))
-        return
+#    def tableContextMenuRequest(self, point):
+#        self.row = self.table.rowAt(point.y())
+#        self.col = self.table.columnAt(point.x())
+#        
+#        print(self.cell.text)
+#        self.tableContextMenu.exec_(self.table.viewport().mapToGlobal(pos))
+#        return
 
     def resizeEvent(self, event):
         self.table.setGeometry(3, 28, self.geometry().width()-6, self.geometry().height()-32)
@@ -403,28 +405,28 @@ class window(QMainWindow):
     def changeLanguage(self, lang):
         self.standardLang = lang
         self.fileMenuOpenXML.setText("&"+language[lang]["importXML"])
-        self.fileMenuOpenXML.setText(language[lang]["importXMLdesc"])
         self.fileMenuSaveAs.setText("&"+language[lang]["save"])
-        self.fileMenuSaveAs.setText(language[lang]["savedesc"])
         self.fileMenuExit.setText("&"+language[lang]["exit"])
-        self.fileMenuExit.setText(language[lang]["exitdesc"])
-        self.editMenuPlacementAction.setText("&"+language[lang]["placement"])
-        self.editMenuSurnameAction.setText("&"+language[lang]["surname"])
-        self.editMenuLastnameAction.setText("&"+language[lang]["lastname"])
-        self.editMenuTimeAction.setText("&"+language[lang]["time"])
-        self.editMenuOrganisationAction.setText("&"+language[lang]["organisation"])
-        self.editMenuCourseAction.setText("&"+language[lang]["course"])
-        self.editMenuSplittimeAction.setText("&"+language[lang]["splittime"])
-        self.helpMenuAbout.setText("&"+language[lang]["about"])
-        self.editMenuSubSelect.setTitle("&"+language[lang]["columnSelect"])
+#        self.editMenuPlacementAction.setText("&"+language[lang]["placement"])
+#        self.editMenuSurnameAction.setText("&"+language[lang]["surname"])
+#        self.editMenuLastnameAction.setText("&"+language[lang]["lastname"])
+#        self.editMenuTimeAction.setText("&"+language[lang]["time"])
+#        self.editMenuOrganisationAction.setText("&"+language[lang]["organisation"])
+#        self.editMenuCourseAction.setText("&"+language[lang]["course"])
+#        self.editMenuSplittimeAction.setText("&"+language[lang]["splittime"])
+#        self.helpMenuAbout.setText("&"+language[lang]["about"])
+#        self.editMenuSubSelect.setTitle("&"+language[lang]["columnSelect"])
         self.fileMenu.setTitle("&"+language[lang]["file"])
-        self.editMenu.setTitle("&"+language[lang]["edit"])
+#        self.editMenu.setTitle("&"+language[lang]["edit"])
         self.helpMenu.setTitle("&"+language[lang]["help"])
-        self.tableMenuMoveLeftAction.setText("&"+language[lang]["moveleft"])
-        self.tableMenuMoveRightAction.setText("&"+language[lang]["moveright"])
-        self.wholeData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
-        self.tableData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
-        self.updateTable(self.tableData)
+#        self.tableMenuMoveLeftAction.setText("&"+language[lang]["moveleft"])
+#        self.tableMenuMoveRightAction.setText("&"+language[lang]["moveright"])
+        try:
+            self.wholeData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
+            self.tableData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
+            self.updateTable(self.tableData)
+        except AttributeError:
+            pass
 
     def button3Clicked(self):
         print("debug")
