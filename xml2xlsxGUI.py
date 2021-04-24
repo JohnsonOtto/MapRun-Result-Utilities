@@ -6,65 +6,6 @@ import xml.etree.ElementTree as et
 import pandas as pd
 import sys, os
 
-language = {
-    "german" : {
-        "file":"Datei",
-        "edit":"Bearbeiten",
-        "help":"Hilfe",
-        "save":"Speichern",
-        "savedesc":".xlsx Datei exportieren",
-        "exit":"Programm schließen",
-        "exitdesc":"Programm schließen",
-        "placement":"Platzierung",
-        "surname":"Vorname",
-        "lastname":"Nachname",
-        "time":"Zeit",
-        "organisation":"Verein",
-        "course":"Bahn",
-        "splittime":"Zwischenzeiten", 
-        "importXML":".xml importieren",
-        "importXMLdesc":"Ergebnisse von .xml Dateien laden",
-        "columnSelect":"Spalten wählen",
-        "select":"Datei auswählen",
-        "error":"Fehler",
-        "noFiles":"Keine Dateien importiert!",
-        "done":"Fertig",
-        "exportSuccess":"Datei erfolgreich gespeichert!",
-        "about":"Über",
-        "moveright":"rechts",
-        "moveleft":"links",
-        "allcourses":"Alle Bahnen"
-    },
-    "english" : {
-        "file":"File",
-        "edit":"Edit",
-        "help":"Help",
-        "save":"Save",
-        "savedesc":"Export .xlsx file",
-        "exit":"Exit application",
-        "exitdesc":"Exit application",
-        "placement":"Placement",
-        "surname":"Surname",
-        "lastname":"Lastname",
-        "time":"Time",
-        "course":"Course",
-        "splittime":"Split Times",
-        "organisation":"Organisation", 
-        "importXML":"Import .xml",
-        "importXMLdesc":"Load results from .xml file",
-        "columnSelect":"Select columns",
-        "select":"Select file",
-        "error":"Error",
-        "noFiles":"No files imported!",
-        "done":"Success",
-        "exportSuccess":"Exported file successfully!",
-        "about":"About",
-        "moveright":"right",
-        "moveleft":"left",
-        "allcourses":"Combined"
-    }
-}
-
 def resourcePath(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -234,45 +175,45 @@ class window(QMainWindow):
         self.helpSubMenuLanguage.addAction(self.englishAction)
         self.helpSubMenuLanguage.addAction(self.germanAction)
 
-#       self.editMenuPlacementAction = QAction("&"+language[self.standardLang]["placement"],self, checkable=True)
-#       self.editMenuPlacementAction.triggered.connect(self.placementSubmenuAction)
-#       self.editMenuPlacementAction.setChecked(True)
-#
-#       self.editMenuSurnameAction = QAction("&"+language[self.standardLang]["surname"], self, checkable=True)
-#       self.editMenuSurnameAction.triggered.connect(self.surnameSubmenuAction)
-#       self.editMenuSurnameAction.setChecked(True)
-#
-#       self.editMenuLastnameAction = QAction("&"+language[self.standardLang]["lastname"],self, checkable = True)
-#       self.editMenuLastnameAction.triggered.connect(self.lastnameSubmenuAction)
-#       self.editMenuLastnameAction.setChecked(True)
-#
-#       self.editMenuTimeAction = QAction("&"+language[self.standardLang]["time"],self,checkable=True)
-#       self.editMenuTimeAction.triggered.connect(self.timeSubmenuAction)
-#       self.editMenuTimeAction.setChecked(True)
-#
-#       self.editMenuOrganisationAction = QAction("&"+language[self.standardLang]["organisation"],self,checkable=True)
-#       self.editMenuOrganisationAction.triggered.connect(self.organisationSubmenuAction)
-#       self.editMenuOrganisationAction.setChecked(True)
-#
-#       self.editMenuCourseAction = QAction("&"+language[self.standardLang]["course"],self, checkable=True)
-#       self.editMenuCourseAction.triggered.connect(self.courseSubmenuAction)
-#       self.editMenuCourseAction.setChecked(True)
-#
-#       self.editMenuSplittimeAction = QAction("&"+language[self.standardLang]["splittime"],self,checkable=True)
-#       self.editMenuSplittimeAction.triggered.connect(self.splittimeSubmenuAction)
-#       self.editMenuSplittimeAction.setChecked(False)
-#
-#       self.helpMenuAbout = QAction("&"+language[self.standardLang]["about"],self)
-#       self.helpMenuAbout.triggered.connect(self.about)
-#
-#       self.editMenuSubSelect = QMenu("&"+language[self.standardLang]["columnSelect"],self)
-#       self.editMenuSubSelect.addAction(self.editMenuPlacementAction)
-#       self.editMenuSubSelect.addAction(self.editMenuSurnameAction)
-#       self.editMenuSubSelect.addAction(self.editMenuLastnameAction)
-#       self.editMenuSubSelect.addAction(self.editMenuTimeAction)
-#       self.editMenuSubSelect.addAction(self.editMenuOrganisationAction)
-#       self.editMenuSubSelect.addAction(self.editMenuCourseAction)
-#       self.editMenuSubSelect.addAction(self.editMenuSplittimeAction)
+        self.editMenuPlacementAction = QAction("&"+language[self.standardLang]["placement"],self, checkable=True)
+        self.editMenuPlacementAction.triggered.connect(self.placementSubmenuAction)
+        self.editMenuPlacementAction.setChecked(True)
+ 
+        self.editMenuSurnameAction = QAction("&"+language[self.standardLang]["surname"], self, checkable=True)
+        self.editMenuSurnameAction.triggered.connect(self.surnameSubmenuAction)
+        self.editMenuSurnameAction.setChecked(True)
+ 
+        self.editMenuLastnameAction = QAction("&"+language[self.standardLang]["lastname"],self, checkable = True)
+        self.editMenuLastnameAction.triggered.connect(self.lastnameSubmenuAction)
+        self.editMenuLastnameAction.setChecked(True)
+ 
+        self.editMenuTimeAction = QAction("&"+language[self.standardLang]["time"],self,checkable=True)
+        self.editMenuTimeAction.triggered.connect(self.timeSubmenuAction)
+        self.editMenuTimeAction.setChecked(True)
+ 
+        self.editMenuOrganisationAction = QAction("&"+language[self.standardLang]["organisation"],self,checkable=True)
+        self.editMenuOrganisationAction.triggered.connect(self.organisationSubmenuAction)
+        self.editMenuOrganisationAction.setChecked(True)
+ 
+        self.editMenuCourseAction = QAction("&"+language[self.standardLang]["course"],self, checkable=True)
+        self.editMenuCourseAction.triggered.connect(self.courseSubmenuAction)
+        self.editMenuCourseAction.setChecked(True)
+ 
+        self.editMenuSplittimeAction = QAction("&"+language[self.standardLang]["splittime"],self,checkable=True)
+        self.editMenuSplittimeAction.triggered.connect(self.splittimeSubmenuAction)
+        self.editMenuSplittimeAction.setChecked(False)
+ 
+        self.helpMenuAbout = QAction("&"+language[self.standardLang]["about"],self)
+        self.helpMenuAbout.triggered.connect(self.about)
+ 
+        self.editMenuSubSelect = QMenu("&"+language[self.standardLang]["columnSelect"],self)
+        self.editMenuSubSelect.addAction(self.editMenuPlacementAction)
+        self.editMenuSubSelect.addAction(self.editMenuSurnameAction)
+        self.editMenuSubSelect.addAction(self.editMenuLastnameAction)
+        self.editMenuSubSelect.addAction(self.editMenuTimeAction)
+        self.editMenuSubSelect.addAction(self.editMenuOrganisationAction)
+        self.editMenuSubSelect.addAction(self.editMenuCourseAction)
+        self.editMenuSubSelect.addAction(self.editMenuSplittimeAction)
 
         self.menu = self.menuBar()
         self.fileMenu = self.menu.addMenu("&"+language[self.standardLang]["file"])
@@ -281,49 +222,46 @@ class window(QMainWindow):
         self.fileMenu.addAction(self.fileMenuExit)
         self.fileMenu.addSeparator()
 
-#        self.editMenu = self.menu.addMenu("&"+language[self.standardLang]["edit"])
-#        self.editMenu.addMenu(self.editMenuSubSelect)
+        self.editMenu = self.menu.addMenu("&"+language[self.standardLang]["edit"])
+        self.editMenu.addMenu(self.editMenuSubSelect)
 
         self.helpMenu = self.menu.addMenu("&"+language[self.standardLang]["help"])
         self.helpMenu.addMenu(self.helpSubMenuLanguage)
-#        self.helpMenu.addAction(self.helpMenuAbout)
+        self.helpMenu.addAction(self.helpMenuAbout)
 
-#        self.debugMenuAction = QAction("&Debug",self)
-#        self.debugMenuAction.triggered.connect(self.button3Clicked)
+        self.debugMenuAction = QAction("&Debug",self)
+        self.debugMenuAction.triggered.connect(self.button3Clicked)
 
-#        self.debugMenu = self.menu.addMenu("&Debug")
-#        self.debugMenu.addAction(self.debugMenuAction)
+        self.debugMenu = self.menu.addMenu("&Debug")
+        self.debugMenu.addAction(self.debugMenuAction)
 
         self.table = QTableView(self)
         self.table.setGeometry(3, 28, self.geometry().width()-6, self.geometry().height()-32)    
         self.table.verticalHeader().setVisible(False)
 
-#        self.vertTableHeaders = self.table.horizontalHeader()
-#        self.vertTableHeaders.setContextMenuPolicy(Qt.CustomContextMenu) 
-#        self.vertTableHeaders.customContextMenuRequested.connect(self.tableContextMenuRequest)
-#
-#        self.tableMenuTestAction = QAction("&Test",self)
-#        self.tableMenuTestAction.triggered.connect(lambda: print("test"))
-#
-#        self.tableMenuMoveRightAction = QAction("&"+language[self.standardLang]["moveright"])
-#        #self.tableMenuMoveRightAction.triggered.connect()
-#
-#        self.tableMenuMoveLeftAction = QAction("&"+language[self.standardLang]["moveleft"])
-#
-#        self.tableContextMenu = QMenu()
-#        self.tableContextMenu.addAction(self.tableMenuTestAction)
-#        self.tableContextMenu.addAction(self.tableMenuMoveLeftAction)
-#        self.tableContextMenu.addAction(self.tableMenuMoveRightAction)
-#
-        self.showMaximized()
+        self.vertTableHeaders = self.table.horizontalHeader()
+        self.vertTableHeaders.setContextMenuPolicy(Qt.CustomContextMenu) 
+        self.vertTableHeaders.customContextMenuRequested.connect(self.tableContextMenuRequest)
 
-#    def tableContextMenuRequest(self, point):
-#        self.row = self.table.rowAt(point.y())
-#        self.col = self.table.columnAt(point.x())
-#        
-#        print(self.cell.text)
-#        self.tableContextMenu.exec_(self.table.viewport().mapToGlobal(pos))
-#        return
+        self.tableMenuMoveRightAction = QAction("&"+language[self.standardLang]["moveright"])
+        #self.tableMenuMoveRightAction.triggered.connect()
+
+        self.tableMenuMoveLeftAction = QAction("&"+language[self.standardLang]["moveleft"])
+
+        self.tableContextMenu = QMenu()
+        self.tableContextMenu.addAction(self.tableMenuMoveLeftAction)
+        self.tableContextMenu.addAction(self.tableMenuMoveRightAction)
+
+        #self.showMaximized()
+        self.show()
+
+    def tableContextMenuRequest(self, point):
+        self.row = self.table.rowAt(point.y())
+        self.col = self.table.columnAt(point.x())
+        
+        #print(self.cell.text)
+        self.tableContextMenu.exec_(self.table.viewport().mapToGlobal(point))
+        return
 
     def resizeEvent(self, event):
         self.table.setGeometry(3, 28, self.geometry().width()-6, self.geometry().height()-32)
@@ -407,20 +345,19 @@ class window(QMainWindow):
         self.fileMenuOpenXML.setText("&"+language[lang]["importXML"])
         self.fileMenuSaveAs.setText("&"+language[lang]["save"])
         self.fileMenuExit.setText("&"+language[lang]["exit"])
-#        self.editMenuPlacementAction.setText("&"+language[lang]["placement"])
-#        self.editMenuSurnameAction.setText("&"+language[lang]["surname"])
-#        self.editMenuLastnameAction.setText("&"+language[lang]["lastname"])
-#        self.editMenuTimeAction.setText("&"+language[lang]["time"])
-#        self.editMenuOrganisationAction.setText("&"+language[lang]["organisation"])
-#        self.editMenuCourseAction.setText("&"+language[lang]["course"])
-#        self.editMenuSplittimeAction.setText("&"+language[lang]["splittime"])
-#        self.helpMenuAbout.setText("&"+language[lang]["about"])
-#        self.editMenuSubSelect.setTitle("&"+language[lang]["columnSelect"])
+        self.editMenuPlacementAction.setText("&"+language[lang]["placement"])
+        self.editMenuSurnameAction.setText("&"+language[lang]["surname"])
+        self.editMenuLastnameAction.setText("&"+language[lang]["lastname"])
+        self.editMenuTimeAction.setText("&"+language[lang]["time"])
+        self.editMenuOrganisationAction.setText("&"+language[lang]["organisation"])
+        self.editMenuCourseAction.setText("&"+language[lang]["course"])
+        self.editMenuSplittimeAction.setText("&"+language[lang]["splittime"])
+        self.helpMenuAbout.setText("&"+language[lang]["about"])
+        self.editMenuSubSelect.setTitle("&"+language[lang]["columnSelect"])
         self.fileMenu.setTitle("&"+language[lang]["file"])
-#        self.editMenu.setTitle("&"+language[lang]["edit"])
+        self.editMenu.setTitle("&"+language[lang]["edit"])
         self.helpMenu.setTitle("&"+language[lang]["help"])
-#        self.tableMenuMoveLeftAction.setText("&"+language[lang]["moveleft"])
-#        self.tableMenuMoveRightAction.setText("&"+language[lang]["moveright"])
+        self.tableMenuMoveLeftAction.setText("&"+language[lang]["moveleft"])
         try:
             self.wholeData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
             self.tableData.columns = [language[lang]["course"], language[lang]["placement"], language[lang]["lastname"], language[lang]["surname"], language[lang]["organisation"], language[lang]["time"]]
@@ -439,6 +376,66 @@ class window(QMainWindow):
 
     
 if __name__ == '__main__':
+
+    language = {
+        "german" : {
+            "file":"Datei",
+            "edit":"Werkzeuge",
+            "help":"Hilfe",
+            "save":"Speichern",
+            "savedesc":".xlsx Datei exportieren",
+            "exit":"Programm schließen",
+            "exitdesc":"Programm schließen",
+            "placement":"Platzierung",
+            "surname":"Vorname",
+            "lastname":"Nachname",
+            "time":"Zeit",
+            "organisation":"Verein",
+            "course":"Bahn",
+            "splittime":"Zwischenzeiten", 
+            "importXML":".xml importieren",
+            "importXMLdesc":"Ergebnisse von .xml Dateien laden",
+            "columnSelect":"Spalten wählen",
+            "select":"Datei auswählen",
+            "error":"Fehler",
+            "noFiles":"Keine Dateien importiert!",
+            "done":"Fertig",
+            "exportSuccess":"Datei erfolgreich gespeichert!",
+            "about":"Über",
+            "moveright":"rechts",
+            "moveleft":"links",
+            "allcourses":"Alle Bahnen"
+        },
+        "english" : {
+            "file":"File",
+            "edit":"Tools",
+            "help":"Help",
+            "save":"Save",
+            "savedesc":"Export .xlsx file",
+            "exit":"Exit application",
+            "exitdesc":"Exit application",
+            "placement":"Placement",
+            "surname":"Surname",
+            "lastname":"Lastname",
+            "time":"Time",
+            "course":"Course",
+            "splittime":"Split Times",
+            "organisation":"Organisation", 
+            "importXML":"Import .xml",
+            "importXMLdesc":"Load results from .xml file",
+            "columnSelect":"Select columns",
+            "select":"Select file",
+            "error":"Error",
+            "noFiles":"No files imported!",
+            "done":"Success",
+            "exportSuccess":"Exported file successfully!",
+            "about":"About",
+            "moveright":"right",
+            "moveleft":"left",
+            "allcourses":"Combined"
+        }
+    }    
+
     app = QApplication(sys.argv)
     win = window()
     sys.exit(app.exec_())
