@@ -228,7 +228,6 @@ class window(QMainWindow):
         super().__init__()
 
         # self.setGeometry(100,100,270,265)
-        self.fileName = "result.xlsx"
         self.fileList = None
         self.standardLang = "german"
         self.severalSheets = True
@@ -254,7 +253,7 @@ class window(QMainWindow):
 
     def initUI(self):
         self.setGeometry(0, 0, 750, 750)
-        self.setWindowTitle("xml2xlsx")
+        self.setWindowTitle("MapRun Result Utilities")
         self.setWindowIcon(QIcon(resourcePath("icon.png")))
 
         self.fileMenuOpenXML = QAction(
