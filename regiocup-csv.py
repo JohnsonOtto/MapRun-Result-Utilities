@@ -80,15 +80,22 @@ def readFilesCleanData(files):
             )
             firstday = 24 * 3600 * formatDate(eventDict[0]["firstday"])
             lastday = 24 * 3600 * (formatDate(eventDict[0]["lastday"]) + 1)
-
-            if (
-                personDict["run"]["status"] == "0"
-                and firstday < personDict["run"]["starttime"] < lastday
-            ):
+            status = personDict["run"]["status"]
+            if not firstday < personDict["run"]["starttime"] < lastday:
+                personDict["run"]["score"] = 0.0
+                rest.append(personDict)
+            elif status == "0":
                 results.append(personDict)
-            else:
+            elif status == "3":
                 personDict["run"]["score"] = 0.0
                 personDict["run"]["note"] = "Fehlstempel"
+                rest.append(personDict)
+            elif status == "4":
+                personDict["run"]["score"] = 0.0
+                personDict["run"]["note"] = "a.K."
+                rest.append(personDict)
+            else:
+                personDict["run"]["score"] = 0.0
                 rest.append(personDict)
 
     while len(results) > 0:
