@@ -55,8 +55,8 @@ def readFilesCleanData(files):
             # print(tmp[i])
             personDict = {
                 "info": {
-                    "surname": tmp[i][4],
                     "lastname": tmp[i][3],
+                    "firstname": tmp[i][4],
                     "organisation": tmp[i][14],
                 },
                 "run": {
@@ -101,15 +101,15 @@ def readFilesCleanData(files):
     while len(results) > 0:
         currentPerson = [results[0]]
         identifier = (
-            results[0]["info"]["surname"]
-            + results[0]["info"]["lastname"]
+            results[0]["info"]["lastname"]
+            + results[0]["info"]["firstname"]
             + results[0]["info"]["organisation"]
             + results[0]["run"]["event"]
         )
         for j in range(1, len(results)):
             jdentifier = (
-                results[j]["info"]["surname"]
-                + results[j]["info"]["lastname"]
+                results[j]["info"]["lastname"]
+                + results[j]["info"]["firstname"]
                 + results[j]["info"]["organisation"]
                 + results[j]["run"]["event"]
             )
@@ -147,12 +147,9 @@ def calcScore(cup):
     for event in events:
         course = []
         bestTime = time2sec("24:00:00")
-
         for person in cup:
             if event["shortname"] == person["run"]["event"]:
                 course.append(person)
-                # cup.remove(person)
-
                 if time2sec(person["run"]["time"]) < bestTime:
                     bestTime = time2sec(person["run"]["time"])
 
@@ -171,7 +168,7 @@ def compactPersons(courseresult):
         toappend = [
             courseresult[0]["run"]["course"],
             courseresult[0]["info"]["lastname"],
-            courseresult[0]["info"]["surname"],
+            courseresult[0]["info"]["firstname"],
             courseresult[0]["info"]["organisation"],
             [
                 courseresult[0]["run"]["event"],
@@ -181,12 +178,19 @@ def compactPersons(courseresult):
                 courseresult[0]["run"]["note"],
             ],
         ]
+        name = (
+            courseresult[0]["info"]["lastname"] + courseresult[0]["info"]["firstname"]
+        )
 
         i = 1
         while True:
             if i >= len(courseresult) or len(courseresult) == 1:
                 break
-            if courseresult[0]["info"] == courseresult[i]["info"]:
+            iname = (
+                courseresult[i]["info"]["lastname"]
+                + courseresult[i]["info"]["firstname"]
+            )
+            if name == iname:
                 toappend.append(
                     [
                         courseresult[i]["run"]["event"],
@@ -231,7 +235,13 @@ def compactPersons(courseresult):
             if not check:
                 toappend += ["----", "----", 0.0, ""]
         if not misPunch:
-            scores = [toappend[6], toappend[10], toappend[14], toappend[18]]
+            scores = [
+                toappend[6],
+                toappend[10],
+                toappend[14],
+                toappend[18],
+                toappend[22],
+            ]
             score = round(sum(findNmax(scores, 4)), 2)
         else:
             score = 0.0
@@ -271,6 +281,12 @@ if __name__ == "__main__":
             "firstday": "24-04-2021",
             "lastday": "09-05-2021",
         },
+        {
+            "name": "Merseburg",
+            "shortname": "Pfingstanger",
+            "firstday": "08-05-2021",
+            "lastday": "16-05-2021",
+        },
     ]
 
     headers = [
@@ -295,6 +311,10 @@ if __name__ == "__main__":
         "WOB Laufzeit",
         "WOB Punkte",
         "WOB Bemerkung",
+        "Pfingstanger Laufdatum",
+        "Pfingstanger Laufzeit",
+        "Pfingstanger Punkte",
+        "Pfingstanger Bemerkung",
         "Punkte gesamt",
     ]
 
@@ -341,7 +361,7 @@ if __name__ == "__main__":
     for i in range(len(coursesCup)):
         coursesCup[i] = calcScore(coursesCup[i])
         coursesCup[i] = compactPersons(coursesCup[i])
-        coursesCup[i].sort_values(by=20, ascending=False, inplace=True)
+        coursesCup[i].sort_values(by=24, ascending=False, inplace=True)
         coursesCup[i].reset_index(inplace=True, drop=True)
         coursesCup[i].insert(
             loc=1, value=range(1, len(coursesCup[i]) + 1), column="Platzierung"
@@ -370,7 +390,7 @@ if __name__ == "__main__":
         worksheet = writer.sheets[sheetName]
         worksheet.set_column(1, 3, 10)
         worksheet.set_column(4, 4, 20)
-        worksheet.set_column(5, 21, 14)
+        worksheet.set_column(5, 25, 14)
 
         total += coursesCup[i].values.tolist() + [" "]
 
