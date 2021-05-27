@@ -39,6 +39,12 @@ def time2sec(timestr):
     return int(h) * 3600 + int(m) * 60 + int(s)
 
 
+def formatCourseName(filestr):
+    groups = filestr.split(" ")
+    course = groups[-1][:-4]
+    return course
+
+
 def getXMLResults(xmlfilelist, header):
     results = []
     ns = {"ol": "http://www.orienteering.org/datastandard/3.0"}
@@ -79,11 +85,10 @@ def getXMLResults(xmlfilelist, header):
                 ]
             )
 
-        results += gathered + [["", "", "", "", "", ""]]
+        results = results + gathered + [["", "", "", "", "", ""]]
     del results[-1]
 
     results = pd.DataFrame(results)
-    results.drop_duplicates(inplace=True)
     results.columns = header
     return results
 
@@ -91,6 +96,7 @@ def getXMLResults(xmlfilelist, header):
 def getCSVResults(csvfilelist, header):
     results = []
     for filename in csvfilelist:
+        course = formatCourseName(filename)
         gathered = []
         rest = []
         with open(filename, "r", encoding="utf8") as f:
@@ -101,37 +107,36 @@ def getCSVResults(csvfilelist, header):
             if csvRaw[i][12] == "0":
                 gathered.append(
                     [
-                        "nicht in Datei",
+                        course,
                         csvRaw[i][3],
                         csvRaw[i][4],
                         csvRaw[i][14],
-                        csvRaw[i][24],
                         time2sec(csvRaw[i][11]),
+                        csvRaw[i][24].replace("-", "."),
                     ]
                 )
 
             else:
                 rest.append(
                     [
-                        "nicht in Datei",
+                        course,
                         "MP",
                         csvRaw[i][3],
                         csvRaw[i][4],
                         csvRaw[i][14],
-                        csvRaw[i][24],
                         secs2hrs(time2sec(csvRaw[i][11])),
+                        csvRaw[i][24].replace("-", "."),
                     ]
                 )
-        gathered.sort(key=lambda i: i[5])
+        gathered.sort(key=lambda i: i[4])
         for i in range(len(gathered)):
-            gathered[i][5] = secs2hrs(gathered[i][5])
+            gathered[i][4] = secs2hrs(gathered[i][4])
             gathered[i].insert(1, (i + 1))
 
-        results += gathered + rest + [["", "", "", "", "", ""]]
+        results = results + gathered + rest + [["", "", "", "", "", "", ""]]
     del results[-1]
 
     results = pd.DataFrame(results)
-    results.drop_duplicates(inplace=True)
     results.columns = header
     return results
 
@@ -147,7 +152,7 @@ def data2xlsx(dataFrame, filename, severalSheets=True):
         singleDFs = []
 
         for row in dataFrame.itertuples():
-            if list(row)[1:] == ["", "", "", "", "", ""]:
+            if list(row)[2] == "":
                 breakRows.append(row.Index)
         noSpaces = dataFrame.drop(breakRows)
         breakRows = [-1] + breakRows + [len(dataFrame)]
@@ -246,8 +251,8 @@ class window(QMainWindow):
             language[self.standardLang]["lastname"],
             language[self.standardLang]["surname"],
             language[self.standardLang]["organisation"],
-            language[self.standardLang]["rundate"],
             language[self.standardLang]["time"],
+            language[self.standardLang]["rundate"],
         ]
         self.initUI()
 
@@ -363,18 +368,17 @@ class window(QMainWindow):
         self.fileMenu.addAction(self.fileMenuExit)
         self.fileMenu.addSeparator()
 
-        self.editMenu = self.menu.addMenu("&" + language[self.standardLang]["edit"])
-        self.editMenu.addMenu(self.editMenuSubSelect)
+        # self.editMenu = self.menu.addMenu("&" + language[self.standardLang]["edit"])
+        # self.editMenu.addMenu(self.editMenuSubSelect)
 
         self.helpMenu = self.menu.addMenu("&" + language[self.standardLang]["help"])
         self.helpMenu.addMenu(self.helpSubMenuLanguage)
         self.helpMenu.addAction(self.helpMenuAbout)
 
-        self.debugMenuAction = QAction("&Debug", self)
-        self.debugMenuAction.triggered.connect(self.button3Clicked)
-
-        self.debugMenu = self.menu.addMenu("&Debug")
-        self.debugMenu.addAction(self.debugMenuAction)
+        # self.debugMenuAction = QAction("&Debug", self)
+        # self.debugMenuAction.triggered.connect(self.button3Clicked)
+        # self.debugMenu = self.menu.addMenu("&Debug")
+        # self.debugMenu.addAction(self.debugMenuAction)
 
         self.table = QTableView(self)
         self.table.setGeometry(
@@ -520,11 +524,15 @@ class window(QMainWindow):
         print("splittime")
 
     def about(self):
-        print("about")
+        self.showMessageBox(
+            language[self.standardLang]["about"],
+            language[self.standardLang]["aboutdesc"],
+        )
 
     def changeLanguage(self, lang):
         self.standardLang = lang
         self.fileMenuOpenXML.setText("&" + language[lang]["importXML"])
+        self.fileMenuOpenCSV.setText("&" + language[lang]["importCSV"])
         self.fileMenuSaveAs.setText("&" + language[lang]["save"])
         self.fileMenuExit.setText("&" + language[lang]["exit"])
         self.editMenuPlacementAction.setText("&" + language[lang]["placement"])
@@ -538,7 +546,7 @@ class window(QMainWindow):
         self.helpMenuAbout.setText("&" + language[lang]["about"])
         self.editMenuSubSelect.setTitle("&" + language[lang]["columnSelect"])
         self.fileMenu.setTitle("&" + language[lang]["file"])
-        self.editMenu.setTitle("&" + language[lang]["edit"])
+        # self.editMenu.setTitle("&" + language[lang]["edit"])
         self.helpMenu.setTitle("&" + language[lang]["help"])
         self.tableMenuMoveLeftAction.setText("&" + language[lang]["moveleft"])
         # add translate table + data headers (difference between csv and xml!)
@@ -585,6 +593,7 @@ if __name__ == "__main__":
             "moveleft": "links",
             "allcourses": "Alle Bahnen",
             "rundate": "Laufdatum",
+            "aboutdesc": "Version: v0.3",
         },
         "english": {
             "file": "File",
@@ -616,6 +625,7 @@ if __name__ == "__main__":
             "moveleft": "left",
             "allcourses": "Combined",
             "rundate": "Date",
+            "aboutdesc": "Version: v0.3",
         },
     }
 
