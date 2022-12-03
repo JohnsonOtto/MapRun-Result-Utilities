@@ -9,4 +9,4 @@ Mit `Datei -> .xml importieren` werden die Ergbenisse aus den gewählten Dateien
 ## English
 
 This application allows you to convert multiple .xml files from a MapRun event to a single .xlsx file for further processing.
-Data can be load with `File -> Import .xml` and the .xlsx file can be saved with `File -> Save`.
+Data can be loaded with `File -> Import .xml` and the .xlsx file can be saved with `File -> Save`.
